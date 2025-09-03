@@ -1,43 +1,41 @@
 
 var frog_Points = [];
-size=0.05
+var frogSize=0.08
 
 //original starting point
 //chances location while moving
-var frog_loc= vec2(0,0)
+var frog_loc= vec2(0,(-1+frogSize));
 
 var frogSpeed=0.05
 
-
+var frogColor=[0.4,0.8,0.26,1.0];
 
 function frog(side){
     //clear previus points for the frog
     frog_Points=[]
 
-    let a=vec2(frog_loc[0]-size,frog_loc[1]+size);
-    let b=vec2(frog_loc[0]+size,frog_loc[1]+size);
-    let c=vec2(frog_loc[0]+size,frog_loc[1]-size);
-    let d=vec2(frog_loc[0]-size,frog_loc[1]-size);
-    let e;
+    let a=vec2((frog_loc[0]-frogSize),frog_loc[1]);
+    let b=vec2((frog_loc[0]+frogSize),frog_loc[1]);
+
+    let c=vec2(frog_loc[0],(frog_loc[1]+frogSize));
+    let d=vec2(frog_loc[0],(frog_loc[1]-frogSize));
+
 
      switch (side){
         case "f":
-            e=vec2(frog_loc[0],frog_loc[1]+(size*2));
-            frog_Points.push(e,a,b,d,c);            
+            
+            frog_Points.push(a,b,c);
             break;
         case "r":
-            e=vec2(frog_loc[0]+(size*2),frog_loc[1]);
-            frog_Points.push(e,b,c,a,d);
+            frog_Points.push(c,b,d);
             break;
 
         case "b":
-            e=vec2(frog_loc[0],frog_loc[1]-(size*2));
-            frog_Points.push(e,c,d,b,a);
+            frog_Points.push(d,a,b);
             break;
 
         case "l":
-            e=vec2(frog_loc[0]-(size*2),frog_loc[1]);
-            frog_Points.push(e,a,d,b,c);
+            frog_Points.push(a,c,d);
             break;
 
      }
@@ -78,10 +76,10 @@ function frog_movement(e){
              
         }
 
-        if(newLoc[0]>(1-size)||newLoc[0]<(-1+size)){
+        if((newLoc[0]+frogSize)>1||(newLoc[0]-frogSize)<-1){
             return;
         }
-        if(newLoc[1]>(1-size)||newLoc[1]<(-1+size)){
+        if((newLoc[1]+frogSize>1)||(newLoc[1]-frogSize)<-1){
             return;
         }
         else{

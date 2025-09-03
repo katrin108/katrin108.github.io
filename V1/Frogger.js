@@ -4,7 +4,7 @@ var uColor;
 
  var vPosition;
 
- var sidewalkBuffer,frogBuffer;
+ var sidewalkBuffer,frogBuffer,roadBuffer,carBuffer;
  var program;
 
 
@@ -35,6 +35,10 @@ window.onload = function init() {
     //make the sidewalk
 
     sidewalkBuffer=gl.createBuffer();
+    roadBuffer=gl.createBuffer();
+    carBuffer=gl.createBuffer();
+
+
     map()
     
     //make the frog   
@@ -47,6 +51,8 @@ window.onload = function init() {
 
     document.addEventListener("keydown", function(e) {
         frog_movement(e);
+       
+        
     });
 
     render();
@@ -57,13 +63,47 @@ function render() {
 
     gl.clear( gl.COLOR_BUFFER_BIT );
 
+    //carmovement
+    
+     for (let i=0;i<cars.length;i++){
+        cars[i].update();
+        CarPoints(cars);
+      
+     }
+
     // draw sidewalk
     gl.bindBuffer(gl.ARRAY_BUFFER, sidewalkBuffer);
     gl.vertexAttribPointer(vPosition, 2, gl.FLOAT, false, 0, 0);
     gl.enableVertexAttribArray(vPosition);
     //color
-    gl.uniform4fv(uColor, [0.7, 0.70, 0.7, 1.0]);  // light gray
+    gl.uniform4fv(uColor, [0.60, 0.10, 0.90, 1.0]);  // sidewalk color
     gl.drawArrays(gl.TRIANGLES, 0, sidewalkPoints.length);
+
+
+    //roads
+    gl.bindBuffer(gl.ARRAY_BUFFER, roadBuffer);
+    gl.vertexAttribPointer(vPosition, 2, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(vPosition);
+
+    gl.uniform4fv(uColor, [0.2, 0.2, 0.2, 1.0]);  // road color dark gray
+    gl.drawArrays(gl.TRIANGLES, 0, roadPoints.length);
+
+
+    //cars
+    gl.bindBuffer(gl.ARRAY_BUFFER, carBuffer);
+    gl.vertexAttribPointer(vPosition, 2, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(vPosition);
+
+    for(let i=0;i< cars.length;i++){
+     
+
+       
+        gl.uniform4fv(uColor, cars[i].color);  // car color
+        gl.drawArrays(gl.TRIANGLES, i*cars.length, cars.length);
+    }
+    
+
+
 
 
     gl.bindBuffer(gl.ARRAY_BUFFER, frogBuffer);
@@ -73,9 +113,9 @@ function render() {
 
 
     //color for the frog:
-    gl.uniform4fv(uColor,[0.1,0.60,0.30,1.0]); //dark green
+    gl.uniform4fv(uColor,frogColor); //dark green
     //this is the frog
-    gl.drawArrays(gl.TRIANGLE_STRIP, 0, frog_Points.length );
+    gl.drawArrays(gl.TRIANGLES, 0, frog_Points.length );
 
 
     window.requestAnimFrame(render);

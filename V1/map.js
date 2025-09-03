@@ -4,24 +4,38 @@ var streetPoints = [];
 
 
 
-//number of streets
-var street= 3;
+//number of roads
+var lanes= 3;
 
 
 
-var sidewalkHeigth=0.5;
+var sidewalkHeigth=0.2;
 
 var sidewalkPoints=[];
 
+var roadPoints=[];
 
+var carPoints=[];
+
+var cars=[]
+
+var carSize=0.08;
 
 function map(){
-    sidewalk(sidewalkHeigth)
-    
+    sidewalk(sidewalkHeigth);
+    road();
  
-    //update the buffer
+    //update the buffer sidewalk
     gl.bindBuffer(gl.ARRAY_BUFFER,sidewalkBuffer);
     gl.bufferData(gl.ARRAY_BUFFER,flatten(sidewalkPoints),gl.STATIC_DRAW);
+
+    
+
+    //update the buffer road
+    gl.bindBuffer(gl.ARRAY_BUFFER,roadBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER,flatten(roadPoints),gl.STATIC_DRAW);
+
+
 }
 
 function sidewalk(Heigth){
@@ -44,6 +58,40 @@ function sidewalk(Heigth){
     
 
 }
+function road(){
+    
+    var h=(2-(sidewalkHeigth*2))/lanes;
+    
+    var laneBottom=-1 + sidewalkHeigth; 
+    for(var i=1; i <= lanes;++i){
+        laneTopp=laneBottom+h;
+        a=vec2(-1,laneBottom);
+        b=vec2(1,laneBottom);
+        c=vec2(1,laneTopp);
+        d=vec2(-1,laneTopp);
+
+        roadPoints.push(a,b,c);
+        roadPoints.push(a,c,d);
+        
+
+        let y = (laneTopp+laneBottom)/2
+
+        let r=Math.random();
+
+
+        let car1=new Car(vec2(r,y),(0.005*i),1,randomColor());
+        let car2=new Car(vec2(-r,y),(0.005*i),1,randomColor());
+        cars.push(car1);
+        cars.push(car2);
+        console.log(car1.position);
+        laneBottom+=h;
+
+        
+    }
+    createCars();
+
+}
+
 
 
 
