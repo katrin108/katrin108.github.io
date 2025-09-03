@@ -4,7 +4,7 @@ var uColor;
 
  var vPosition;
 
- var sidewalkBuffer,frogBuffer,roadBuffer,carBuffer;
+ var sidewalkBuffer,frogBuffer,roadBuffer,carBuffer,pointsBuffer;
  var program;
 
 
@@ -37,6 +37,8 @@ window.onload = function init() {
     sidewalkBuffer=gl.createBuffer();
     roadBuffer=gl.createBuffer();
     carBuffer=gl.createBuffer();
+    pointsBuffer=gl.createBuffer();
+
 
 
     map()
@@ -96,10 +98,8 @@ function render() {
 
     for(let i=0;i< cars.length;i++){
      
-
-       
         gl.uniform4fv(uColor, cars[i].color);  // car color
-        gl.drawArrays(gl.TRIANGLES, i*cars.length, cars.length);
+        gl.drawArrays(gl.TRIANGLES, i*(6*lanes), (6*lanes));
     }
     
 
@@ -116,6 +116,18 @@ function render() {
     gl.uniform4fv(uColor,frogColor); //dark green
     //this is the frog
     gl.drawArrays(gl.TRIANGLES, 0, frog_Points.length );
+
+
+    //Points
+    if(pointsPoints!=0){
+        gl.bindBuffer(gl.ARRAY_BUFFER, pointsBuffer);
+        gl.vertexAttribPointer(vPosition, 2, gl.FLOAT, false, 0, 0);
+        gl.enableVertexAttribArray(vPosition);
+
+        gl.uniform4fv(uColor, [1, 0.0, 0.0, 1.0]);  // TODO
+        gl.drawArrays(gl.LINES, 0, pointsPoints.length);
+    }
+    
 
 
     window.requestAnimFrame(render);

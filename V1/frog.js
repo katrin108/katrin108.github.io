@@ -13,12 +13,16 @@ var frogColor=[0.4,0.8,0.26,1.0];
 function frog(side){
     //clear previus points for the frog
     frog_Points=[]
+    //head
+    
+    let a=vec2((frog_loc[0]-frogSize),frog_loc[1]); //left
+    let b=vec2((frog_loc[0]+frogSize),frog_loc[1]);//righ
 
-    let a=vec2((frog_loc[0]-frogSize),frog_loc[1]);
-    let b=vec2((frog_loc[0]+frogSize),frog_loc[1]);
+    
+    let c=vec2(frog_loc[0],(frog_loc[1]+frogSize));//top
+    let d=vec2(frog_loc[0],(frog_loc[1]-frogSize));//down
 
-    let c=vec2(frog_loc[0],(frog_loc[1]+frogSize));
-    let d=vec2(frog_loc[0],(frog_loc[1]-frogSize));
+
 
 
      switch (side){
@@ -39,10 +43,12 @@ function frog(side){
             break;
 
      }
-    //update the buffer
+     points()//lisen to points
 
+    //update the buffer
+     
     gl.bindBuffer(gl.ARRAY_BUFFER,frogBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER,flatten(frog_Points),gl.STATIC_DRAW);
+    gl.bufferData(gl.ARRAY_BUFFER,flatten(frog_Points),gl.DYNAMIC_DRAW);
  
 }
 function frog_movement(e){

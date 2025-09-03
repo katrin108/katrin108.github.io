@@ -1,4 +1,5 @@
 
+var carSize=0.08;
 
 class Car{
     constructor(position,speed,direction,color){
@@ -15,15 +16,18 @@ class Car{
             frog_loc=vec2(0,(-1+frogSize));
 
 
-            //original color
-            frogColor=[0.4,0.8,0.26,1.0];
+            //points reset after death
+            pointsCounter=0;
             
         }
-        if(this.direction===1){
+        if(this.direction===0){
             this.position[0]+=this.speed
+         
         }
-        else if(this.direction===-1){
+        else {
             this.position[0]-=this.speed
+          
+
         }
 
         
@@ -51,7 +55,7 @@ class Car{
 }
 //used for the color of the cars
 function randomColor(){
-    return [Math.random(),(Math.random()+0.2),(Math.random()),1];
+    return [Math.random(),Math.random(),(Math.random()),1];
 }
 
 function createCars(){
@@ -63,9 +67,6 @@ function createCars(){
     }
     CarPoints(cars);
    
-    //update the buffer cars
-    gl.bindBuffer(gl.ARRAY_BUFFER,carBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER,flatten(carPoints),gl.STATIC_DRAW);
 }
 function CarPoints(cars){
     carPoints=[];
@@ -82,8 +83,9 @@ function CarPoints(cars){
         carPoints.push(a,b,c);
         carPoints.push(a,c,d);
      }
+
     //update the buffer cars
     gl.bindBuffer(gl.ARRAY_BUFFER,carBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER,flatten(carPoints),gl.STATIC_DRAW);
+    gl.bufferData(gl.ARRAY_BUFFER,flatten(carPoints),gl.DYNAMIC_DRAW);
 
 }
