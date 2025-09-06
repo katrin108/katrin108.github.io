@@ -18,7 +18,7 @@ var roadPoints=[];
 var carPoints=[];
 
 var cars=[]
-var carSpeed=0.002;
+var carSpeed=0.001;
 
 
 
@@ -36,7 +36,9 @@ function map(){
     gl.bindBuffer(gl.ARRAY_BUFFER,roadBuffer);
     gl.bufferData(gl.ARRAY_BUFFER,flatten(roadPoints),gl.STATIC_DRAW);
 
-
+    document.body.appendChild(restartText);
+     restartText.style.display='none';
+    
 }
 
 function sidewalk(){

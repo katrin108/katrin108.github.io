@@ -58,24 +58,24 @@ function frog_movement(e){
     switch(e.key){
 
         case "ArrowUp":
-            newLoc[1]=frog_loc[1]+frogSpeed
+            newLoc[1]=frog_loc[1]+frogSpeed;
             frog("f"); 
 
             break;
                 
         case "ArrowRight":
-            newLoc[0]=frog_loc[0]+frogSpeed
+            newLoc[0]=frog_loc[0]+frogSpeed;
             frog("r"); 
 
             break;
     
         case "ArrowDown":
-            newLoc[1]=newLoc[1]-frogSpeed
+            newLoc[1]=newLoc[1]-frogSpeed;
             frog("b");
             break;   
             
         case "ArrowLeft":
-            newLoc[0]=frog_loc[0]-frogSpeed
+            newLoc[0]=frog_loc[0]-frogSpeed;
             frog("l"); 
             break;
 

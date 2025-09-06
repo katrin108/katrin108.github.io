@@ -12,19 +12,8 @@ class Car{
     update(){
         if(crash()){
 
-/*
-            const lose=document.createElement('h2');
-            lose.textContent="Game Over!";
-            document.body.appendChild(lose);
+            restart();
 
-*/
-
-            //original starting point
-            frog_loc=vec2(0,(-1+frogSize));
-
-
-            //points reset after death
-            pointsCounter=0;
             
         }
         if(this.direction===0){
