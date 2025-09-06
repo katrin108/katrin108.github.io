@@ -11,7 +11,14 @@ class Car{
     }
     update(){
         if(crash()){
-            
+
+/*
+            const lose=document.createElement('h2');
+            lose.textContent="Game Over!";
+            document.body.appendChild(lose);
+
+*/
+
             //original starting point
             frog_loc=vec2(0,(-1+frogSize));
 
@@ -25,7 +32,7 @@ class Car{
          
         }
         else {
-            this.position[0]-=this.speed
+           this.position[0]-=this.speed
           
 
         }
@@ -33,13 +40,13 @@ class Car{
         
 
          if(this.position[0]>(1+carSize)){
-            this.color=randomColor();
+            this.color=randomCarColor();
             this.position[0]=(-1-carSize);
             
             
         }
         else if(this.position[0]<(-1-carSize)){
-            this.color=randomColor();
+            this.color=randomCarColor();
             this.position[0]=(1+carSize);
             
         
@@ -54,8 +61,8 @@ class Car{
 
 }
 //used for the color of the cars
-function randomColor(){
-    return [Math.random(),Math.random(),(Math.random()),1];
+function randomCarColor(){
+    return vec4(Math.random(),Math.random(),(Math.random()),1);
 }
 
 function createCars(){
@@ -87,5 +94,6 @@ function CarPoints(cars){
     //update the buffer cars
     gl.bindBuffer(gl.ARRAY_BUFFER,carBuffer);
     gl.bufferData(gl.ARRAY_BUFFER,flatten(carPoints),gl.DYNAMIC_DRAW);
+  
 
 }

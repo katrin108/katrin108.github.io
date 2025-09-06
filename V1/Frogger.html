@@ -1,6 +1,22 @@
 <!DOCTYPE html>
 <html>
-<head><script id="vertex-shader" type="x-shader/x-vertex">
+<head>
+    <style>
+
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+    
+    </style>
+    
+    
+    
+    <script id="vertex-shader" type="x-shader/x-vertex">
 
 attribute vec4 vPosition;
 
@@ -26,12 +42,13 @@ void main()
 <script type="text/javascript" src="../Common/initShaders.js"></script>
 <script type="text/javascript" src="../Common/MV.js"></script>
 
+
+
 <script type="text/javascript" src="map.js"></script>
 <script type="text/javascript" src="gameLogic.js"></script>
 
+
 <script type="text/javascript" src="car.js"></script>
-
-
 <script type="text/javascript" src="frog.js"></script>
 
 <script type="text/javascript" src="Frogger.js"></script>
@@ -39,6 +56,7 @@ void main()
 </head>
 <body>
     
+   
     <canvas id="gl-canvas" width="512" height="512">
         Oops ... your browser doesn't support the HTML5 canvas element
     </canvas>

@@ -18,6 +18,7 @@ var roadPoints=[];
 var carPoints=[];
 
 var cars=[]
+var carSpeed=0.002;
 
 
 
@@ -61,11 +62,12 @@ function sidewalk(){
 function road(){
     
     var h=(2-(sidewalkHeigth*2))/lanes;
-    var speed=0.0005*lanes;
 
+    let speed=1
     carSize=frogSize;
     var laneBottom=-1 + sidewalkHeigth; 
     for(var i=1; i <= lanes;++i){
+        
         laneTopp=laneBottom+h;
         a=vec2(-1,laneBottom);
         b=vec2(1,laneBottom);
@@ -75,14 +77,16 @@ function road(){
         roadPoints.push(a,b,c);
         roadPoints.push(a,c,d);
         
-        
+        //add the cars
         let y = (laneTopp+laneBottom)/2
 
-        let r=RandomLocation();
+        let x=RandomLocation();
 
+        speed=carSpeed*i//speed of the cars made
 
-        let car1=new Car(vec2(r,y),(speed*i),i%2,randomColor());
-        let car2=new Car(vec2(-r,y),(speed*i),i%2,randomColor());
+        //Car(position, speed, direction, color);
+        let car1=new Car(vec2(x,y),(speed),i%2,randomCarColor());
+        let car2=new Car(vec2(-x,y),(speed),i%2,randomCarColor());
         cars.push(car1);
         cars.push(car2);
        

@@ -56,6 +56,7 @@ window.onload = function init() {
        
         
     });
+    
 
     render();
 }
@@ -98,8 +99,10 @@ function render() {
 
     for(let i=0;i< cars.length;i++){
      
-        gl.uniform4fv(uColor, cars[i].color);  // car color
-        gl.drawArrays(gl.TRIANGLES, i*(6*lanes), (6*lanes));
+        gl.uniform4fv(uColor,cars[i].color);
+        //6 is the points in the 2 cars 
+        //need too be chanced if the number of cars chance
+        gl.drawArrays(gl.TRIANGLES, i*6, 6);
     }
     
 
@@ -124,8 +127,8 @@ function render() {
         gl.vertexAttribPointer(vPosition, 2, gl.FLOAT, false, 0, 0);
         gl.enableVertexAttribArray(vPosition);
 
-        gl.uniform4fv(uColor, [1, 0.0, 0.0, 1.0]);  // TODO
-        gl.drawArrays(gl.LINES, 0, pointsPoints.length);
+        gl.uniform4fv(uColor, [1.0, 1.0, 0.0, 1.0]);  // TODO broght yellow
+        gl.drawArrays(gl.TRIANGLES, 0, pointsPoints.length);
     }
     
 

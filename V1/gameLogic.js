@@ -2,6 +2,7 @@ var pointsCounter=0;
 var pointsPoints=[];
 
 
+
 function crash(){
     for (let i=0;i<cars.length;i++){
         const car=cars[i];
@@ -34,7 +35,7 @@ function points(){
         ++pointsCounter
         pointsLoc()
 
-        console.log(pointsCounter);
+
     }
 
     //add winnig the game.... TODO
@@ -45,19 +46,27 @@ function pointsLoc(){
 
    
     if(pointsCounter%5==0){
-        var a= vec2(0.95-((pointsCounter-1)*0.02),0.95);
-        var b= vec2(0.95-((pointsCounter-4)*0.02),0.85);
-        pointsPoints.push(a,b);
+        var a= vec2(0.95-((pointsCounter-1)*0.04),0.95);
+        var b= vec2(0.95-((pointsCounter-4)*0.04),0.85);
+
+        var c= vec2(0.96-((pointsCounter-1)*0.04),0.95);
+        var d= vec2(0.96-((pointsCounter-4)*0.04),0.85);
+        pointsPoints.push(a,b,c);
+        pointsPoints.push(b,c,d);
+
 
     }
     else{
-        var a= vec2(0.95-(pointsCounter*0.02),0.95);
-        var b= vec2(0.95-(pointsCounter*0.02),0.85);
-        pointsPoints.push(a,b);
+        var a= vec2(0.95-(pointsCounter*0.04),0.95);
+        var b= vec2(0.95-(pointsCounter*0.04),0.85);
+        var c= vec2(0.96-(pointsCounter*0.04),0.95);
+        var d= vec2(0.96-(pointsCounter*0.04),0.85);
+        pointsPoints.push(a,b,c);
+        pointsPoints.push(b,c,d);
 
     }
 
-    //pointsPoints.push(a,b);
+
 
     gl.bindBuffer(gl.ARRAY_BUFFER,pointsBuffer);
     gl.bufferData(gl.ARRAY_BUFFER,flatten(pointsPoints),gl.DYNAMIC_DRAW);
