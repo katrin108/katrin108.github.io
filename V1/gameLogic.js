@@ -104,8 +104,6 @@ function restart(){
             //points reset after death
             pointsCounter=0;
             pointsPoints=[];
-
-            pointsLoc();
             
       
             restartText.style.display='none';
