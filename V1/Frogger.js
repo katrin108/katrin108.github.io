@@ -88,7 +88,7 @@ function render() {
     gl.vertexAttribPointer(vPosition, 2, gl.FLOAT, false, 0, 0);
     gl.enableVertexAttribArray(vPosition);
 
-    gl.uniform4fv(uColor, [0.2, 0.2, 0.2, 1.0]);  // road color dark gray
+    gl.uniform4fv(uColor, [0, 0, 0, 1.0]);  // road color black
     gl.drawArrays(gl.TRIANGLES, 0, roadPoints.length);
 
 

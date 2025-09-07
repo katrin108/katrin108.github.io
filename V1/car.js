@@ -49,9 +49,20 @@ class Car{
     
 
 }
+
 //used for the color of the cars
 function randomCarColor(){
-    return vec4(Math.random(),Math.random(),(Math.random()),1);
+    var r=Math.random();
+    var g=Math.random();
+    var b=Math.random();
+    if(r + g + b >1){//make sure the car is not too dark
+        return vec4(r,g,b,1);
+    }
+    else{
+        return randomCarColor();
+    }
+
+    
 }
 
 function createCars(){
