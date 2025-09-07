@@ -103,8 +103,8 @@ function road(){
 //for the cars so they will not toutch
 function RandomLocation(){
     let r=Math.random();
-    while(r<=carSize){
-        r=Math.random();
+    if(r<=carSize||r>(1-carSize)){
+        return RandomLocation();
     }
     return r;
 }
