@@ -23,8 +23,6 @@ function frog(side){
     let d=vec2(frog_loc[0],(frog_loc[1]-frogSize));//down
 
 
-
-
      switch (side){
         case "f":
             

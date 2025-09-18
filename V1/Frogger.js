@@ -53,7 +53,6 @@ window.onload = function init() {
 
     document.addEventListener("keydown", function(e) {
         frog_movement(e);
-       
         
     });
     
