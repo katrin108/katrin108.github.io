@@ -9,7 +9,6 @@
 ////////////////////////////////////////////////////////////////////
 var gl;
 var points = [];
-var colors=[];
 
 var numPoints = 10000;
 
@@ -23,9 +22,7 @@ window.onload = function init()
     // Búa til slembipunkta á striganum
     for ( var i = 0; i < numPoints; i++ ) {
         pt = vec2( 2.0*Math.random() - 1.0, 2.0*Math.random() - 1.0 );
-        polishFlag(pt);
         points.push( pt );
-        
     }
     
     //
@@ -38,7 +35,7 @@ window.onload = function init()
     var program = initShaders( gl, "vertex-shader", "fragment-shader" );
     gl.useProgram( program );
     
-    // Load the points into the GPU
+    // Load the data into the GPU
     var bufferId = gl.createBuffer();
     gl.bindBuffer( gl.ARRAY_BUFFER, bufferId );
     gl.bufferData( gl.ARRAY_BUFFER, flatten(points), gl.STATIC_DRAW );
@@ -48,33 +45,12 @@ window.onload = function init()
     gl.vertexAttribPointer( vPosition, 2, gl.FLOAT, false, 0, 0 );
     gl.enableVertexAttribArray( vPosition );
 
-    // Load the colors into the GPU
-    var bufferColors = gl.createBuffer();
-    gl.bindBuffer( gl.ARRAY_BUFFER, bufferColors );
-    gl.bufferData( gl.ARRAY_BUFFER, flatten(colors), gl.STATIC_DRAW );
-
-    // Associate shader variables with our data buffer
-    var vColors = gl.getAttribLocation( program, "aColor" );
-    gl.vertexAttribPointer( vColors, 4, gl.FLOAT, false, 0, 0 );
-    gl.enableVertexAttribArray( vColors );
-
     locTime = gl.getUniformLocation( program, "time" );
 
     iniTime = Date.now();
     
     render();
 };
-
-function polishFlag(point){
-    if(point[1]>0){
-        colors.push(vec4( 1.0, 1.0, 1.0,1.0));
-        
-    }
-    else{
-        colors.push(vec4( 1.0, 0.0, 0.0,1.0));
-
-    }
-}
 
 
 function render() {
