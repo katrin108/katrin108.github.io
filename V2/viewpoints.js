@@ -8,6 +8,8 @@
 //    Leiðrétt útgáfa fyrir réttan snúning í MV.js
 //
 //    Hjálmtýr Hafsteinsson, september 2025
+
+// endurbætur fyrir verkefni 2  í Tölvugrafík -katrín
 ////////////////////////////////////////////////////////////////////
 var canvas;
 var gl;
