@@ -47,7 +47,7 @@ var vertices = [
 ];
 
 
-
+///
 // Mynsturhnit fyrir spjaldi�
 /*
 var texCoords = [

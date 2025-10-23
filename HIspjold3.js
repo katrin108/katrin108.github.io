@@ -45,7 +45,7 @@ var vertices = [
     vec4( -1.0,  1.5, 0.0, 1.0 ),
     vec4( -1.0, -1.5, 0.0, 1.0 )
 ];
-
+////
 
 
 // Mynsturhnit fyrir spjaldi�
