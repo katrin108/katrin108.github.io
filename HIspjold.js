@@ -39,9 +39,9 @@ var mvLoc;
 var vertices = [
     vec4( 0.0, 0.0, 0.0, 1.0 ),      // ne�ri vinstri
     vec4(  1.0, 0.0, 0.0, 1.0 ),      // ne�ri h�gri
-    vec4(  1.0,  2.0, 0.0, 1.0 ),      // efri h�gri
-    vec4(  1.0,  2.0, 0.0, 1.0 ),
-    vec4( 0.0,  2.0, 0.0, 1.0 ),
+    vec4(  1.0,  1.0, 0.0, 1.0 ),      // efri h�gri
+    vec4(  1.0,  1.0, 0.0, 1.0 ),
+    vec4( 0.0,  1.0, 0.0, 1.0 ),
     vec4( 0.0, 0.0, 0.0, 1.0 )
     ///aaaaaaaaaaaaaaaaaa
 ];
