@@ -35,16 +35,17 @@ var mvLoc;
 //    | /  /     |
 //    5  0-------1
 //
+//
 // Tveir �r�hyrningar sem mynda spjald � z=0 planinu
 var vertices = [
-    vec4( 0.0, 0.0, 0.0, 1.0 ),      // ne�ri vinstri
-    vec4(  1.0, 0.0, 0.0, 1.0 ),      // ne�ri h�gri
-    vec4(  1.0,  1.0, 0.0, 1.0 ),      // efri h�gri
-    vec4(  1.0,  1.0, 0.0, 1.0 ),
-    vec4( 0.0,  1.0, 0.0, 1.0 ),
-    vec4( 0.0, 0.0, 0.0, 1.0 )
-    ///aaaaaaaaaaaaaaaaaa
+    vec4( -1.0, -1.5, 0.0, 1.0 ),      // ne�ri vinstri
+    vec4(  1.0, -1.5, 0.0, 1.0 ),      // ne�ri h�gri
+    vec4(  1.0,  1.5, 0.0, 1.0 ),      // efri h�gri
+    vec4(  1.0,  1.5, 0.0, 1.0 ),
+    vec4( -1.0,  1.5, 0.0, 1.0 ),
+    vec4( -1.0, -1.5, 0.0, 1.0 )
 ];
+
 
 
 // Mynsturhnit fyrir spjaldi�
