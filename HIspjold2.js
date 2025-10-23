@@ -48,6 +48,7 @@ var vertices = [
 
 
 // Mynsturhnit fyrir spjaldi�
+/*
 var texCoords = [
     vec2( -1.0, 0.0 ),//0
     vec2( 1.0, 0.0 ),//1
@@ -57,7 +58,7 @@ var texCoords = [
     vec2( -1.0, 0.0 )//0
 ];
 
-/*
+*/
 var texCoords = [
     vec2( 0.0, 1.0 ),//0
     vec2( 2.5, 1.0 ),//1
@@ -65,7 +66,7 @@ var texCoords = [
     vec2( 2.5, 0.0 ),//2
     vec2( 0.0,0.0 ),//3
     vec2( 0.0, 1.0 )//0
-];
+];/*
 var texCoords = [
     vec2( 1.0, 3.0 ),//0
     vec2( 0.0, 3.0 ),//1
