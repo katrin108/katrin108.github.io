@@ -38,10 +38,10 @@ var mvLoc;
 // Tveir �r�hyrningar sem mynda spjald � z=0 planinu
 var vertices = [
     vec4( 0.0, 0.0, 0.0, 1.0 ),      // ne�ri vinstri
-    vec4(  2.0, 0.0, 0.0, 1.0 ),      // ne�ri h�gri
-    vec4(  2.0,  2.0, 0.0, 1.0 ),      // efri h�gri
-    vec4(  2.0,  2.0, 0.0, 1.0 ),
-    vec4( 0.0,  2.0, 0.0, 1.0 ),
+    vec4(  1.0, 0.0, 0.0, 1.0 ),      // ne�ri h�gri
+    vec4(  1.0,  1.0, 0.0, 1.0 ),      // efri h�gri
+    vec4(  1.0,  1.0, 0.0, 1.0 ),
+    vec4( 0.0,  1.0, 0.0, 1.0 ),
     vec4( 0.0, 0.0, 0.0, 1.0 )
     ///aaaaaaaaaaaaaaaaaa
 ];
@@ -58,7 +58,7 @@ var texCoords = [
     vec2( -1.0, 0.0 )//0
 ];
 */
-
+/*
 var texCoords = [
     vec2( 0.0, 1.0 ),//0
     vec2( 2.5, 1.0 ),//1
@@ -66,8 +66,7 @@ var texCoords = [
     vec2( 2.5, 0.0 ),//2
     vec2( 0.0,0.0 ),//3
     vec2( 0.0, 1.0 )//0
-];
-/*
+];*/
 var texCoords = [
     vec2( 1.0, 3.0 ),//0
     vec2( 0.0, 3.0 ),//1
@@ -76,7 +75,7 @@ var texCoords = [
     vec2( 1.0,0.0 ),//3
     vec2( 1.0, 3.0 )//0
 ];
-*/
+
 function configureTexture( image ) {
     texture = gl.createTexture();
     gl.bindTexture( gl.TEXTURE_2D, texture );
