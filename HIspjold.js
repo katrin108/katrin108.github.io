@@ -43,18 +43,18 @@ var vertices = [
     vec4(  1.0,  1.0, 0.0, 1.0 ),
     vec4( -1.0,  1.0, 0.0, 1.0 ),
     vec4( -1.0, -1.0, 0.0, 1.0 )
-    ///aaaaaaaaaaa
+    ///aaaaaaaaaaaaaaaaaa
 ];
 
 
 // Mynsturhnit fyrir spjaldi�
 var texCoords = [
-    vec2( 0.0, 0.0 ),
-    vec2( 1.0, 0.0 ),
-    vec2( 1.0, 1.0 ),
-    vec2( 1.0, 1.0 ),
-    vec2( 0.0, 1.0 ),
-    vec2( 0.0, 0.0 )
+    vec2( 0.0, 0.0 ),//0
+    vec2( 1.0, 0.0 ),//1
+    vec2( 1.0, 1.0 ),//2
+    vec2( 1.0, 1.0 ),//2
+    vec2( 0.0, 1.0 ),//3
+    vec2( 0.0, 0.0 )//0
 ];
 
 
