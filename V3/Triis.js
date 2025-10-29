@@ -4,7 +4,7 @@ import * as THREE from 'https://unpkg.com/three@0.160.0/build/three.module.js';
 
 let scene,camera,renderer;
 
-let triomino;
+let container;
 
 
 var movement = false;     
@@ -15,10 +15,16 @@ var origY;
 
 const sensitivity_movement=0.005;
 
-var zDist = 50.0;
+var zDist = 20.0;
 
 
+let fallingObject=null;
 
+const containerBounds= new THREE.Box3(
+    new THREE.Vector3(-3,-10,-3),
+    new THREE.Vector3(3,10,3)
+
+)
 
 function main(){
     scene = new THREE.Scene();
@@ -28,11 +34,14 @@ function main(){
     renderer.setSize( window.innerWidth, window.innerHeight ); 
     document.body.appendChild( renderer.domElement );
 
-
+    fallingObject = polyomino();
+    KeybordControlls(fallingObject);
 
     background()
    
     addMouseControls(renderer.domElement);
+
+
 
     renderer.setAnimationLoop( animate );
   
@@ -61,14 +70,11 @@ function animate() {
 
 function background(){
 
+    container = new THREE.Group();
+
+    container.add(fallingObject);
 
 
-    const container = new THREE.Group();
-
-
-    triomino = polyomino();
-
-    container.add(triomino);
     scene.add( container );
 
     const gridMaterial1 = new THREE.LineBasicMaterial({
@@ -83,17 +89,8 @@ function background(){
         linewidth:13.01
     })
 
-   // let x_camera=camera.rotation.x;
-    //let y_camera=camera.rotation.y;
-
-
         console.log(camera.rotation.y);
     for( let i = -4;i<=24; i+=4){
-        //let a= parseInt((camera.rotation.y)+1);
-        //console.log(a>0? 1:-1);
-        //console.log(camera.rotation.x);
-        console.log(camera.rotation);
-
 
         const gridXZ= new THREE.GridHelper( 6, 6 );
         gridXZ.material=gridMaterial1;
@@ -173,26 +170,101 @@ function addMouseControls(canvas) {
          }
      }  );  
 }
+function KeybordControlls(object){
+    
+
+    window.addEventListener('keypress',function (e){
+        const clone=object.clone(true);
+        switch (e.key){
+            //movement
+            case 'w': 
+                clone.position.z-=1;
+                break;
+
+            case 's': 
+                clone.position.z+=1;
+                break;
+
+            case 'a':
+                clone.position.x -= 1;
+                break;
+
+            case 'd': 
+                clone.position.x+=1;
+                break;
+
+            //rotation
+
+            case 'W':  
+                clone.rotation.x-=(90*Math.PI/180);
+                break;
+
+            case 'S': 
+                clone.rotation.x+=(90*Math.PI/180);
+                break;
+
+            case 'A':
+                clone.rotation.y-=(90*Math.PI/180);
+                break;
+
+            case 'D': 
+                clone.rotation.y+=(90*Math.PI/180);
+                break;
+
+            case 'Q':   
+                clone.rotation.z+=(90*Math.PI/180);
+                break;
+
+            case 'E':    
+                clone.rotation.z-=(90*Math.PI/180);
+                break;
+
+
+        }
+        const box=new THREE.Box3().setFromObject(clone);
+        if(containerBounds.containsBox(box)){
+            object.position.copy(clone.position);
+            object.rotation.copy(clone.rotation);
+        }
+
+    });
+}
+
 function polyomino(){
+    const textureLoader = new THREE.TextureLoader();
+
+    const texture = textureLoader.load('textures/box3.jpg')
+
+    const Orange = new THREE.MeshBasicMaterial( { 
+        color: 0xff8000,
+        map:texture
+     
+        
+    } );
+    const Test = new THREE.MeshBasicMaterial( { 
+        color: 0x40ff00,
+        map:texture
+     
+        
+    } );
+    const Red= new THREE.MeshBasicMaterial( { color: 0xcc0000} );
 
     function L_triomino(material){
         const geometry=new THREE.BoxGeometry( 1, 1, 1 );
-        const Orange = new THREE.MeshBasicMaterial( { color: 0xff8000 } );
 
-
-        const cube1=new THREE.Mesh( geometry,material );
-        cube1.position.set(1,0,0);
-        const cube2=new THREE.Mesh( geometry,material );
-        cube2.position.set(1,1,0);
+        const cube1=new THREE.Mesh( geometry,Red );
+        cube1.position.set(0,0,0);
+        const cube2=new THREE.Mesh( geometry,Test );
+        cube2.position.set(0,1,0);
         const cube3=new THREE.Mesh( geometry,material );
-        cube3.position.set(0,0,0);
+        cube3.position.set(1,0,0);
 
         const L_triomino=new THREE.Group();
         L_triomino.add(cube1);
         L_triomino.add(cube2);
         L_triomino.add(cube3);
 
-
+        L_triomino.position.set(0.5,0.5,0.5)
         return L_triomino;
     }
 
@@ -214,8 +286,7 @@ function polyomino(){
         return straight_triomino;
     }
 
-    const Orange = new THREE.MeshBasicMaterial( { color: 0xff8000 } );
-    const Red= new THREE.MeshBasicMaterial( { color: 0xcc0000} );
+
 
     return L_triomino(Orange);
 }
