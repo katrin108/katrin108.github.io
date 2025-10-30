@@ -9,21 +9,10 @@ html, body {
     align-items: center;        
     font-family: Arial, sans-serif;
     box-sizing: border-box;
-}
-
-#game-box {
-    width: 10vmin;              
-    height: 10vmin;            
-    max-width: 600px;           
-    max-height: 600px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-
-
 
 }
+
+
 
 
 canvas {
@@ -37,7 +26,7 @@ footer{
   left: 0;
   bottom: 0;
   width: 100%;
-  background-color: rgba(255, 0, 0, 0.437);
+
   color: white;
   text-align: center;
 height: 5vmin;  
@@ -46,9 +35,22 @@ display: flex;
 flex-direction: row;
 align-items: center;
 justify-content: center;
-
+  margin-bottom: 15px;
 }
 
+div{
+  height: 5vmin; 
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: center;
+  background-color: rgba(40, 48, 195, 0.553);
+
+  margin: 20px;
+
+  border-radius: 10px;
+
+}
 
 h2{
     padding: 2vmin;
