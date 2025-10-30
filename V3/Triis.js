@@ -259,7 +259,9 @@ function KeybordControlls(object){
             console.log(e.key,e.code);
             switch (e.code){
                 //movement
-                //
+                //  
+
+                
 
 
                 case 'ArrowUp': 
