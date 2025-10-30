@@ -5,7 +5,6 @@ import * as THREE from 'https://unpkg.com/three@0.160.0/build/three.module.js';
 
 let scene,camera,renderer;
 
-let container;
 
 
 var movement = false;     
@@ -22,15 +21,10 @@ const textureLoader = new THREE.TextureLoader();
 
 let texture=null;
 let fallingObject=null;
-let fallingspeed=0.0;
-//let fallingspeed=0.01;
+
+let fallingspeed=0.01;
 
 
-const containerBounds= new THREE.Box3(
-    new THREE.Vector3(-3,-10,-3),
-    new THREE.Vector3(3,20,3)
-
-)
 
 //Grid Colors
 const GREEN = new THREE.LineBasicMaterial({color: 0x0000ff});
@@ -51,6 +45,31 @@ const object_Orange = new THREE.MeshBasicMaterial( {color: 0xff8000} );
 
 //Better movement controlls
 var keyGrup;
+
+
+
+
+//Tetris logic
+const WIDTH=6;      //x
+const HEIGHT=20;    //y
+const DEPTH =6;     //z 
+
+//3D array
+let grid= 
+Array.from({length:WIDTH},() =>
+Array.from({length:HEIGHT},() =>
+Array.from({length:DEPTH},() =>0
+)));
+
+
+
+//walls of the playing area
+
+const containerBounds= new THREE.Box3(
+    new THREE.Vector3(-3,-10,-3),
+    new THREE.Vector3(3,14,3)
+
+)
 
 
 function main(){
@@ -89,7 +108,7 @@ function main(){
 function animate() {
     
 
-    fallingObject.position.y -= fallingspeed;
+    movingObject();
 
     
     const radius = zDist; // distance from object
@@ -105,15 +124,91 @@ function animate() {
 
 }
 
+function canMoveFallingObject(object){
+    for(const cube of object.children){
+
+        const pos=new THREE.Vector3();
+        cube.getWorldPosition(pos);
+
+
+        //round er ekki 100% eða floor þarf að skoða
+        const x=Math.round(pos.x+WIDTH/2);
+        const y=Math.round(pos.y+HEIGHT/2);
+        const z=Math.round(pos.z+DEPTH/2);
+        
+        
+        
+        if(y>=HEIGHT){
+            //console.log("y>");
+            return true;
+        }
+        if(y<HEIGHT){
+            if(y<1){          
+                console.log("y<");
+
+                return false;
+            }
+        
+
+       
+            if(grid[x-1][y-1][z-1] !== 0){   
+                console.log("grid<");
+                //d.log(x,y,z);
+
+                return false;
+            } 
+        }
+            
+    }
+    return true;
+
+}
+
+function movingObject(){
+
+    if(canMoveFallingObject(fallingObject)){
+        fallingObject.position.y -= fallingspeed;
+
+    }else{ 
+        
+        for(const cube of fallingObject.children){
+            const pos=new THREE.Vector3();
+            cube.getWorldPosition(pos);
+            const x=Math.floor(pos.x+WIDTH/2);
+            const y=Math.floor(pos.y+HEIGHT/2);
+            const z=Math.floor(pos.z+DEPTH/2);
+                console.log(x,y,z);
+            
+            grid[x][y][z] = 1;
+        }
+        console.log(grid);
+
+        //TODO IS there full layer in the grid?
+        //TODO Lose if above 20 hight;
+        
+        fallingObject=tetromino(); //Chance in to random object
+        const [x,z] =getFallingObjectLoc();
+        fallingObject.position.set(x,11,z);
+        scene.add( fallingObject );
+
+    }
+
+}
+
+
+
 function background(){
 
 
-    container = new THREE.Group();
 
-    container.add(fallingObject);
+    fallingObject=polyomino();
+    const [x,z] =getFallingObjectLoc();
+    fallingObject.position.set(x,11,z);
+  
 
 
-    scene.add( container );
+
+    scene.add( fallingObject );
 
     for( let i = -4;i<=24; i+=4){
 
@@ -264,7 +359,8 @@ function KeybordControlls(object){
    
         const box=new THREE.Box3().setFromObject(clone);
     
-        if(containerBounds.containsBox(box)){
+        if(containerBounds.containsBox(box)&&canMoveFallingObject(clone)){
+            
             fallingObject.position.copy(clone.position);
             fallingObject.rotation.copy(clone.rotation);
         }
@@ -321,10 +417,10 @@ function KeybordControlls(object){
                 break;
         }
         const box=new THREE.Box3().setFromObject(clone);
-        if(containerBounds.containsBox(box)){
+        if(containerBounds.containsBox(box)&&canMoveFallingObject(clone)){
             object.position.copy(clone.position);
             object.rotation.copy(clone.rotation);
-            }
+        }
 
     });
     
