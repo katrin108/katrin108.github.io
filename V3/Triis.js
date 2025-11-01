@@ -130,6 +130,9 @@ function canMoveFallingObject(object){
     const box=new THREE.Box3().setFromObject(object);
    // console.log(clone.position);
 
+
+   //Það er eitthver villa með containerBounds y held eg,
+   //kannski að færa þa aftur í takkana og hafa frekar y=-10 og grid 
     if(containerBounds.containsBox(box)){
         for(const cube of object.children){
             const pos=new THREE.Vector3();
@@ -141,7 +144,7 @@ function canMoveFallingObject(object){
 
 
             const x=Math.floor(pos.x+WIDTH/2);
-            const y=Math.floor(pos.y+HEIGHT/2);
+            const y=Math.ceil(pos.y+HEIGHT/2);
             const z=Math.floor(pos.z+DEPTH/2);
 
     
@@ -149,19 +152,19 @@ function canMoveFallingObject(object){
             if(y<20){
                 if(grid[x][y][z] !== 0){ 
                     //console.log(x,y,z)  
-                    //console.log("grid<");
+                    console.log("grid<");
                     //d.log(x,y,z);
                     return false;
                 } 
             }else{
-                if(grid[x][19][z] !== 0){  
-                    return false;
-                }
+
                 return true; 
             }
         }
         return true;
     }
+    console.log("containerBounds<");
+
     return false;
 
 }
@@ -172,32 +175,36 @@ function movingObject(){
         fallingObject.position.y -= fallingspeed;
 
     }else{ 
-        
+        var min=20;
         for(const cube of fallingObject.children){
+         
             const pos=new THREE.Vector3();
             cube.getWorldPosition(pos);
-
+            //tower.add(cube);
             //
             const x=Math.floor(pos.x+WIDTH/2);
-            const y=Math.floor(pos.y+HEIGHT/2);
+            const y=Math.ceil(pos.y+HEIGHT/2);
             const z=Math.floor(pos.z+DEPTH/2);
             //console.log(x,y,z);
-            grid[x][y][z] = 1;
+            grid[x][y+1][z] = 1;
+            if(y<min){
+                min=y-1;
+            }
         }
         //console.log(grid);
-        const box = new THREE.Box3();
+        /*const box = new THREE.Box3();
         box.setFromObject(fallingObject);
-        if(box.min.y>-10){
+        if(box.min.y>-9.6){
             //console.log(fallingObject.position.y);
-            //console.log(box.min.y);
+            console.log(box.min.y);
 
             
             fallingObject.position.y =box.min.y;
         }else{
             fallingObject.position.y =-9.5;
 
-        }
-        
+        }*/
+        fallingObject.position.y=min-9.5;
         tower.add(fallingObject);
 
 
