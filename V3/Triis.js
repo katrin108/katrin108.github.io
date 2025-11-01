@@ -61,7 +61,7 @@ Array.from({length:HEIGHT},() =>
 Array.from({length:DEPTH},() =>0
 )));
 
-
+var tower;
 
 //walls of the playing area
 
@@ -124,43 +124,41 @@ function animate() {
 
 }
 
+
 function canMoveFallingObject(object){
-    for(const cube of object.children){
+    const clone=object.clone(true);
 
-        const pos=new THREE.Vector3();
-        cube.getWorldPosition(pos);
+    clone.position.y -= fallingspeed;
+    const box=new THREE.Box3().setFromObject(object);
+   // console.log(clone.position);
 
+    if(containerBounds.containsBox(box)){
+        for(const cube of clone.children){
+            const pos=new THREE.Vector3();
+            cube.getWorldPosition(pos);
 
-        //round er ekki 100% eða floor þarf að skoða
-        const x=Math.round(pos.x+WIDTH/2);
-        const y=Math.round(pos.y+HEIGHT/2);
-        const z=Math.round(pos.z+DEPTH/2);
-        
-        
-        
-        if(y>=HEIGHT){
-            //console.log("y>");
-            return true;
-        }
-        if(y<HEIGHT){
-            if(y<1){          
-                console.log("y<");
+            //round er ekki 100% eða floor þarf að skoða!!!!!!
+            const x=Math.floor(pos.x+WIDTH/2);
+            const y=Math.floor(pos.y+HEIGHT/2);
+            const z=Math.floor(pos.z+DEPTH/2);
 
-                return false;
+            if(y<20){
+                if(grid[x][y][z] !== 0){ 
+                    console.log(x,y,z)  
+                    console.log("grid<");
+                    //d.log(x,y,z);
+                    return false;
+                } 
+            }else{
+                if(grid[x][19][z] !== 0){  
+                    return false;
+                }
+                return true; 
             }
-        
-
-       
-            if(grid[x-1][y-1][z-1] !== 0){   
-                console.log("grid<");
-                //d.log(x,y,z);
-
-                return false;
-            } 
         }
-            
+        return true;
     }
-    return true;
+    return false;
 
 }
 
@@ -174,27 +172,30 @@ function movingObject(){
         for(const cube of fallingObject.children){
             const pos=new THREE.Vector3();
             cube.getWorldPosition(pos);
+
+            //
             const x=Math.floor(pos.x+WIDTH/2);
             const y=Math.floor(pos.y+HEIGHT/2);
             const z=Math.floor(pos.z+DEPTH/2);
-                console.log(x,y,z);
+            console.log(x,y,z);
             
             grid[x][y][z] = 1;
         }
         console.log(grid);
+        tower.add(fallingObject)
 
         //TODO IS there full layer in the grid?
         //TODO Lose if above 20 hight;
         
-        fallingObject=tetromino(); //Chance in to random object
+
+        fallingObject=polyomino(); //Chance in to random object
         const [x,z] =getFallingObjectLoc();
-        fallingObject.position.set(x,11,z);
+        fallingObject.position.set(x,10.5,z);
         scene.add( fallingObject );
 
     }
 
 }
-
 
 
 function background(){
@@ -204,7 +205,11 @@ function background(){
     fallingObject=polyomino();
     const [x,z] =getFallingObjectLoc();
     fallingObject.position.set(x,11,z);
-  
+    
+    tower=new THREE.Group();
+   
+    scene.add(tower);
+    
 
 
 
@@ -325,6 +330,7 @@ function KeybordControlls(object){
         switch (e.key){
             //movement
             case 'w': 
+                console.log(clone.position.x);
                 clone.position.z-=1;
                 break
             case 's': 
@@ -359,7 +365,7 @@ function KeybordControlls(object){
    
         const box=new THREE.Box3().setFromObject(clone);
     
-        if(containerBounds.containsBox(box)&&canMoveFallingObject(clone)){
+        if(canMoveFallingObject(clone)){
             
             fallingObject.position.copy(clone.position);
             fallingObject.rotation.copy(clone.rotation);
@@ -417,7 +423,7 @@ function KeybordControlls(object){
                 break;
         }
         const box=new THREE.Box3().setFromObject(clone);
-        if(containerBounds.containsBox(box)&&canMoveFallingObject(clone)){
+        if(canMoveFallingObject(clone)){
             object.position.copy(clone.position);
             object.rotation.copy(clone.rotation);
         }
@@ -449,6 +455,8 @@ function polyomino(){
         L_triomino.add(cube2);
         L_triomino.add(cube3);
 
+        L_triomino.position.set(0,-1,0);
+
         return L_triomino;
     }
     function straight_triomino(material){
@@ -465,6 +473,7 @@ function polyomino(){
         straight_triomino.add(cube1);
         straight_triomino.add(cube2);
         straight_triomino.add(cube3);
+        straight_triomino.position.set(0,-2,0);
 
 
         return straight_triomino;
@@ -494,6 +503,7 @@ function tetromino(){
         straight_tetromino.add(cube3);
         straight_tetromino.add(cube4);
 
+        straight_tetromino.position.set(0,-3,0);
 
         return straight_tetromino;
         
@@ -517,6 +527,7 @@ function tetromino(){
         square_tetromino.add(cube3);
         square_tetromino.add(cube4);
 
+        square_tetromino.position.set(0,-1,0);
 
         return square_tetromino;
         
@@ -541,6 +552,7 @@ function tetromino(){
         T_tetromino.add(cube3);
         T_tetromino.add(cube4);
 
+        T_tetromino.position.set(0,-1,0);
 
         return T_tetromino;
         
@@ -565,6 +577,7 @@ function tetromino(){
         L_tetromino.add(cube3);
         L_tetromino.add(cube4);
 
+        L_tetromino.position.set(0,-2,0);
 
         return L_tetromino;
         
@@ -588,6 +601,7 @@ function tetromino(){
         skew_tetromino.add(cube3);
         skew_tetromino.add(cube4);
 
+        skew_tetromino.position.set(0,-1,0);
 
         return skew_tetromino;
         
