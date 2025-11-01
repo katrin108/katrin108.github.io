@@ -59,11 +59,12 @@ const DEPTH =6;     //z
 //3D array
 let grid= 
 Array.from({length:WIDTH},() =>
-Array.from({length:HEIGHT},() =>
+Array.from({length:HEIGHT+1},() =>
 Array.from({length:DEPTH},() =>0
 )));
 
 var tower;
+
 
 //walls of the playing area
 
@@ -125,40 +126,45 @@ function animate() {
 
 function canMoveFallingObject(object){
 
-
-    //TODO
-   //Það er eitthver villa með containerBounds y held eg,
-   //kannski að færa þa aftur í takkana og hafa frekar y=-10 og grid 
-
-   //Það er eitthver villa með gula kassan að snúa honum. hann kemmst ekki á hægri vegg 
-   //Þegar hann er á hlið
-   
+    //byggði kuppa frá toppi upp
+    //vill að grid skoði efta kubbinn fyrst
+   //const children=[object.children].reverse();
     for(const cube of object.children){
+
         const pos=new THREE.Vector3();
         cube.getWorldPosition(pos);
-        //round er ekki 100% eða floor þarf að skoða!!!!!!
 
         const x=Math.floor(pos.x+WIDTH/2);
         const y=Math.ceil(pos.y+HEIGHT/2);
         const z=Math.floor(pos.z+DEPTH/2);
 
 
+        //Gólfið
         if(y===1){
             return false;
         }
 
-        else if(y<20){
+        //tower
+        
+            if(y>HEIGHT){
+            
+                return true;
+            }
             if(grid[x][y][z] !== 0){ 
                 //console.log(x,y,z)  
                 console.log("grid<");
+                //console.log(x,y,z);
+
                 //d.log(x,y,z);
                 return false;
             } 
-        }
         
-    }
-    return true;
+        
 
+
+    }
+    //snertir ekkert
+    return true;
 
 }
 
@@ -173,20 +179,27 @@ function movingObject(){
          
             const pos=new THREE.Vector3();
             cube.getWorldPosition(pos);
-            //tower.add(cube);
-            //
             const x=Math.floor(pos.x+WIDTH/2);
             const y=Math.ceil(pos.y+HEIGHT/2);
             const z=Math.floor(pos.z+DEPTH/2);
             //console.log(x,y,z);
-            grid[x][y+1][z] = 1;
+
+            if(y<HEIGHT){
+                grid[x][y+1][z] = 1;
+            }else{
+                console.log("you lose--movingObject");
+            }
+            
             if(y<min){
                 min=y-1;
             }
+          
         }
-
+      
+        //Lægsti punktur kubbs 
         fallingObject.position.y=min-9.5;
         tower.add(fallingObject);
+        
 
 
         //TODO IS there full layer in the grid?
@@ -207,7 +220,7 @@ function movingObject(){
 
 function getNewRandomObject(){
     const r = getRandomInt (7);
-    console.log(r);
+    //console.log(r);
         switch (r){
             case 0:
                 return polyomino(0);
@@ -363,7 +376,6 @@ function KeybordControlls(object){
         switch (e.key){
             //movement
             case 'w': 
-                console.log(clone.position.x);
                 clone.position.z-=1;
                 break
             case 's': 
