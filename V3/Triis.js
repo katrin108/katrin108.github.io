@@ -487,9 +487,10 @@ function KeybordControlls(object){
         }
    
        
-        if(canMoveFallingObject(clone)){
-          
-            
+        const box=new THREE.Box3().setFromObject(clone);
+        if(containerBounds.containsBox(box)&&canMoveFallingObject(clone)){
+
+
             fallingObject.position.copy(clone.position);
             fallingObject.rotation.copy(clone.rotation);
         }
@@ -545,7 +546,11 @@ function KeybordControlls(object){
                 clone.rotation.z-=(90*Math.PI/180);
                 break;
         }
-        if(canMoveFallingObject(clone)){
+        
+        const box=new THREE.Box3().setFromObject(clone);
+        if(containerBounds.containsBox(box)&&canMoveFallingObject(clone)){
+
+
             fallingObject.position.copy(clone.position);
             fallingObject.rotation.copy(clone.rotation);
         }
