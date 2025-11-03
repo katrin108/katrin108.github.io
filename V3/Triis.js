@@ -557,6 +557,7 @@ function KeybordControlls(object){
 
 
 
+
 function getFallingObjectLoc(){
     let randIntX=getRandomInt(2)-1.5;
     let randIntZ=getRandomInt(2)-1.5;
