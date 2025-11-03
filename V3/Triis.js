@@ -25,6 +25,9 @@ let fallingObject=null;
 
 let fallingspeed=0.01;
 
+
+
+var resultText= document.createElement("H2"); 
 let points=0;
 
 
@@ -128,8 +131,8 @@ function background(){
 
 
 
-    //fallingObject=getNewRandomObject();
-    fallingObject=tetromino(3);
+    fallingObject=getNewRandomObject();
+    //fallingObject=tetromino(3);
 
     const [x,z] =getFallingObjectLoc();
     fallingObject.position.set(x,11,z);
@@ -202,6 +205,12 @@ function canMoveFallingObject(object){
         const z=Math.floor(pos.z+DEPTH/2);
 
 
+        //Veggir 
+        if(x>WIDTH ||z>HEIGHT){
+            false;
+        }
+
+
         //Gólfið
         if(y===1){
             return false;
@@ -245,9 +254,7 @@ function movingObject(){
             const x=Math.floor(pos.x+WIDTH/2);
             const y=Math.ceil(pos.y+HEIGHT/2);
             const z=Math.floor(pos.z+DEPTH/2);
-            //console.log(x,y,z);
-
-
+    
             //add cube to the array
             if(y<HEIGHT){
                 grid[x][y+1][z] = 1;
@@ -271,16 +278,20 @@ function movingObject(){
 
         //TODO IS there full layer in the grid?
         //is a row filled?
+        let line=0;
         for(let y=0;y<HEIGHT;y++){
+            
             if(isLayerFull(y)){
                 console.log("Full!!!!",y-1);
                 clearFullLayer(y);
                 //case a new full layer droped.
 
-                //TODO fix if more than one is dropping.
                 y-=1;
+                ++line;
             }
         }
+        points+=40*(line);
+        resultText.textContent="Ponits: "+points;
 
 
         
@@ -289,8 +300,8 @@ function movingObject(){
         
             
 
-        //fallingObject= getNewRandomObject(); //Chance in to random object
-        fallingObject=tetromino(3);
+        fallingObject= getNewRandomObject(); //Chance in to random object
+        //fallingObject=tetromino(3);
         const [x,z] =getFallingObjectLoc();
         fallingObject.position.set(x,10.5,z);
         scene.add(fallingObject);
@@ -475,9 +486,9 @@ function KeybordControlls(object){
                 break
         }
    
-        const box=new THREE.Box3().setFromObject(clone);
-        if(containerBounds.containsBox(box)&&canMoveFallingObject(clone)){
-      
+       
+        if(canMoveFallingObject(clone)){
+          
             
             fallingObject.position.copy(clone.position);
             fallingObject.rotation.copy(clone.rotation);
@@ -534,10 +545,9 @@ function KeybordControlls(object){
                 clone.rotation.z-=(90*Math.PI/180);
                 break;
         }
-        const box=new THREE.Box3().setFromObject(clone);
-        if(containerBounds.containsBox(box)&&canMoveFallingObject(clone)){
-            object.position.copy(clone.position);
-            object.rotation.copy(clone.rotation);
+        if(canMoveFallingObject(clone)){
+            fallingObject.position.copy(clone.position);
+            fallingObject.rotation.copy(clone.rotation);
         }
 
     });
@@ -839,7 +849,7 @@ function customWindow(){
 
     //points
     const ponintsText=document.createElement("div");
-    var resultText= document.createElement("H2"); 
+    //var resultText= document.createElement("H2"); 
     resultText.textContent="Ponits: "+points;
 
     ponintsText.appendChild(resultText);
