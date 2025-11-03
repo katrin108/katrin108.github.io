@@ -306,10 +306,7 @@ function isLayerFull(y){
             if(grid[x][y][z]===0){
                 return false;
             }
-            else{
-               // console.log(grid[x][y][z]);
-            }
-            
+                      
         }
     }
     return true;
@@ -321,18 +318,18 @@ function clearFullLayer(y){
         //remove the cubes in the y height
         for(let z=0;z<DEPTH;z++){
             grid[x][y][z]=0;
-            
-            console.log(grid[x][y][z]);
-            
+                        
             //if there are any cubes above the y 
              //they will go 1 down
             for(let yAbove=y;yAbove<HEIGHT;yAbove++){
-                if(grid[x][yAbove][z]===1){
-                    grid[x][yAbove][z]=0;
-                    grid[x][yAbove-1][z]=1;
+                if(grid[x][yAbove+1][z]===1){
+                    console.log(yAbove, "yAbove");
+                    grid[x][yAbove][z]+=1;
+                    grid[x][yAbove+1][z]-=1;
+                    
                 }
-                
-        }
+                grid[x][HEIGHT][z]=0;
+            }
         }
         
     }
@@ -353,7 +350,9 @@ function clearFullLayer(y){
             if (posY === y) {
                 removedCubes.push(cube);
             } else if (posY > y) {
-                cube.position.y -= 1;
+                pos.y -= 1;
+                cube.position.copy(cube.parent.worldToLocal(pos));
+                
             }
         });
         //remove each cube from the tower and seen
@@ -556,7 +555,7 @@ function getFallingObjectLoc(){
 }
 function getNewRandomObject(){
     const r = getRandomInt (7);
-    //console.log(r);
+    
         switch (r){
             case 0:
                 return polyomino(0);
