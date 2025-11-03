@@ -274,7 +274,11 @@ function movingObject(){
         for(let y=0;y<HEIGHT;y++){
             if(isLayerFull(y)){
                 console.log("Full!!!!",y-1);
-                clearFullLayer(y-1);
+                clearFullLayer(y);
+                //case a new full layer droped.
+
+                //TODO fix if more than one is dropping.
+                y-=1;
             }
         }
 
@@ -302,6 +306,10 @@ function isLayerFull(y){
             if(grid[x][y][z]===0){
                 return false;
             }
+            else{
+               // console.log(grid[x][y][z]);
+            }
+            
         }
     }
     return true;
@@ -314,10 +322,11 @@ function clearFullLayer(y){
         for(let z=0;z<DEPTH;z++){
             grid[x][y][z]=0;
             
+            console.log(grid[x][y][z]);
             
             //if there are any cubes above the y 
              //they will go 1 down
-            for(var yAbove=y+1;yAbove<HEIGHT;yAbove++){
+            for(let yAbove=y;yAbove<HEIGHT;yAbove++){
                 if(grid[x][yAbove][z]===1){
                     grid[x][yAbove][z]=0;
                     grid[x][yAbove-1][z]=1;
@@ -327,29 +336,35 @@ function clearFullLayer(y){
         }
         
     }
-    //find all the cubes too be removed
-    const removedCubes=[];
-    for(const cube of tower.children){
-        //world pos
-        var posY=cube.position.y+9.5;
-        posY+=1
-        console.log(posY,y)
-        if(posY===y){
-            removedCubes.push(cube);
-        }
 
-        //move all the cubes above 1 down
-        if(posY>y){
-            cube.position.y-=1
-        }
-    }
-    //remove each cube from the tower and seen
-    for(const cube of removedCubes){
-        tower.remove(cube);
-        scene.remove(cube);
+    for(const object of tower.children){ 
+        //find all the cubes too be removed
+        const removedCubes=[];
+        object.traverse((cube) => {
+            if (!cube.isMesh) return; 
+
+            const pos = new THREE.Vector3();
+            cube.getWorldPosition(pos);
+
+            var posY = Math.round(pos.y); 
+            posY+=11;
+            console.log(posY,y);
+            
+            if (posY === y) {
+                removedCubes.push(cube);
+            } else if (posY > y) {
+                cube.position.y -= 1;
+            }
+        });
+        //remove each cube from the tower and seen
+        for(const cube of removedCubes){
+            object.remove(cube);
+            scene.remove(cube);
        
         
+        }
     }
+    
     
 }
 
