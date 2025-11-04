@@ -10,6 +10,7 @@ html, body {
     font-family: Arial, sans-serif;
     box-sizing: border-box;
 
+
 }
 
 
@@ -55,7 +56,11 @@ justify-content: center;
 h2{
     padding: 2vmin;
 }
+h3{
+    padding: 2vmin;
+    white-space: pre-line;
 
+}
 /* The switch - the box around the slider */
 /* https://www.w3schools.com/howto/howto_css_switch.asp */
 .switch {
@@ -118,6 +123,46 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+
+dialog{
+  height: 20vh;
+  width: 30vh;
+
+  border: none;
+  border-radius: 10px;
+  display: flex;
+  flex-direction:column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(221, 0, 255, 0.465);
+
+  color: #ccc;
+
+}
+
+
+
+button {
+  background-color: rgb(0, 0, 0);
+
+  border-radius: 15px;
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 26px;
+
+  transition-duration: 0.4s;
+  cursor: pointer;
+  color: #ccc;
+  align-self: center;
+
+}
+button:hover {
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
 }
 
 

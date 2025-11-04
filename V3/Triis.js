@@ -23,7 +23,7 @@ const textureLoader = new THREE.TextureLoader();
 let texture=null;
 let fallingObject=null;
 
-let fallingspeed=0.01;
+let fallingspeed=0.02;
 
 
 
@@ -50,7 +50,7 @@ const object_Orange = new THREE.MeshBasicMaterial( {color: 0xff8000} );
 
 
 //Better movement controlls
-var keyGrup;
+var keyGrup=true;
 
 
 
@@ -63,7 +63,7 @@ const DEPTH =6;     //z
 //3D array
 let grid= 
 Array.from({length:WIDTH},() =>
-Array.from({length:HEIGHT+1},() =>
+Array.from({length:HEIGHT+2},() =>
 Array.from({length:DEPTH},() =>0
 )));
 
@@ -73,10 +73,91 @@ var tower;
 //walls of the playing area
 
 const containerBounds= new THREE.Box3(
-    new THREE.Vector3(-3,-10,-3),
-    new THREE.Vector3(3,20,3)
+    new THREE.Vector3(-3.5,-10,-3.5),
+    new THREE.Vector3(3.5,20,3.5)
 
 )
+
+
+let gamestate ="start";
+
+//dialog for start, lose
+function update(){
+   
+
+  
+    if(gamestate==="start"){
+         document.body.style.backgroundColor ='#0d0d0d';
+        const startSeen=document.createElement("dialog");
+
+
+        const h1=document.createElement("h1");
+        h1.textContent="Triis";
+
+        
+       
+        const startButton=document.createElement("button");
+        startButton.textContent="Start"
+
+
+
+        startSeen.appendChild(h1); 
+
+        startSeen.appendChild(startButton);  
+
+        document.body.appendChild(startSeen);
+
+        startButton.addEventListener("click", function (e){
+            document.body.removeChild(startSeen);
+
+            gamestate="playing";
+          
+            main();
+
+        })
+
+
+    }
+    if(gamestate==="lose"){
+        const loseSeen=document.createElement("dialog");
+        
+        const p=document.createElement("h2");
+        p.textContent="You got: "+points +" points";
+        
+       
+        const restartButton=document.createElement("button");
+        restartButton.textContent="Restart"
+
+
+        loseSeen.appendChild(p); 
+        
+        loseSeen.appendChild(restartButton);  
+        
+       
+        document.body.appendChild(loseSeen);
+
+        restartButton.addEventListener("click", function (e){
+            document.body.removeChild(loseSeen);
+
+            scene.remove(tower);
+
+            points=0;
+            tower=new THREE.Group();
+            scene.add(tower);
+            grid= 
+            Array.from({length:WIDTH},() =>
+            Array.from({length:HEIGHT+2},() =>
+            Array.from({length:DEPTH},() =>0
+            )));
+            gamestate="playing";
+            
+            fallingspeed=0.01;
+
+        })
+       
+    }
+
+}
 
 
 function main(){
@@ -93,13 +174,13 @@ function main(){
     renderer.setSize( window.innerWidth, window.innerHeight ); 
     document.body.appendChild( renderer.domElement );
 
+   background();
 
 
 
+    KeybordControlls();
 
-    KeybordControlls(fallingObject);
-
-    background()
+ 
    
     addMouseControls(renderer.domElement);
 
@@ -192,9 +273,7 @@ function background(){
 
 function canMoveFallingObject(object){
 
-    //byggði kuppa frá toppi upp
-    //vill að grid skoði efta kubbinn fyrst
-   //const children=[object.children].reverse();
+
     for(const cube of object.children){
 
         const pos=new THREE.Vector3();
@@ -203,12 +282,6 @@ function canMoveFallingObject(object){
         const x=Math.floor(pos.x+WIDTH/2);
         const y=Math.ceil(pos.y+HEIGHT/2);
         const z=Math.floor(pos.z+DEPTH/2);
-
-
-        //Veggir 
-        if(x>WIDTH ||z>HEIGHT){
-            false;
-        }
 
 
         //Gólfið
@@ -223,11 +296,9 @@ function canMoveFallingObject(object){
                 return true;
             }
             if(grid[x][y][z] !== 0){ 
-                //console.log(x,y,z)  
-                console.log("grid<");
-                //console.log(x,y,z);
 
-                //d.log(x,y,z);
+                //console.log("grid<");
+
                 return false;
             } 
         
@@ -256,12 +327,16 @@ function movingObject(){
             const z=Math.floor(pos.z+DEPTH/2);
     
             //add cube to the array
-            if(y<HEIGHT){
+            if(y<=HEIGHT){
                 grid[x][y+1][z] = 1;
             }
             //make sure it is below height
             else{
+                gamestate="lose";
                 console.log("you lose--movingObject");
+                update();
+                break;
+                
             }
 
             
@@ -282,7 +357,7 @@ function movingObject(){
         for(let y=0;y<HEIGHT;y++){
             
             if(isLayerFull(y)){
-                console.log("Full!!!!",y-1);
+                //console.log("Full!!!!",y-1);
                 clearFullLayer(y);
                 //case a new full layer droped.
 
@@ -334,7 +409,7 @@ function clearFullLayer(y){
              //they will go 1 down
             for(let yAbove=y;yAbove<HEIGHT;yAbove++){
                 if(grid[x][yAbove+1][z]===1){
-                    console.log(yAbove, "yAbove");
+     
                     grid[x][yAbove][z]+=1;
                     grid[x][yAbove+1][z]-=1;
                     
@@ -356,7 +431,6 @@ function clearFullLayer(y){
 
             var posY = Math.round(pos.y); 
             posY+=11;
-            console.log(posY,y);
             
             if (posY === y) {
                 removedCubes.push(cube);
@@ -430,12 +504,25 @@ function addMouseControls(canvas) {
      
     window.addEventListener("keydown",function(e){
         if(e.key===' '){
-            fallingspeed=0.1;
+            if(gamestate==="playing"){
+               fallingspeed=0.1; 
+            }
+            else{
+               fallingspeed=0.0; 
+
+            }
+            
         }
      })
      window.addEventListener("keyup",function(e){
         if(e.key===' '){
-            fallingspeed=0.01;
+            if(gamestate==="playing"){
+               fallingspeed=0.01; 
+            }
+            else{
+               fallingspeed=0.0; 
+
+            }
         }
      })
 
@@ -443,7 +530,7 @@ function addMouseControls(canvas) {
     
 }
 
-function KeybordControlls(object){
+function KeybordControlls(){
 
     window.addEventListener('keypress',function (e){
 
@@ -488,12 +575,16 @@ function KeybordControlls(object){
    
        
         const box=new THREE.Box3().setFromObject(clone);
-        if(containerBounds.containsBox(box)&&canMoveFallingObject(clone)){
+        if(containerBounds.containsBox(box)){
+          
+            if(canMoveFallingObject(clone)){
 
 
-            fallingObject.position.copy(clone.position);
-            fallingObject.rotation.copy(clone.rotation);
+                fallingObject.position.copy(clone.position);
+                fallingObject.rotation.copy(clone.rotation);
+            }
         }
+            
    
     });
     
@@ -501,7 +592,7 @@ function KeybordControlls(object){
 
         if(keyGrup)return; 
 
-        const clone=object.clone(true);
+        const clone=fallingObject.clone(true);
         switch (e.key){
             //movement
 
@@ -548,12 +639,14 @@ function KeybordControlls(object){
         }
         
         const box=new THREE.Box3().setFromObject(clone);
-        if(containerBounds.containsBox(box)&&canMoveFallingObject(clone)){
-
-
-            fallingObject.position.copy(clone.position);
-            fallingObject.rotation.copy(clone.rotation);
+        if(containerBounds.containsBox(box)){
+            if(canMoveFallingObject(clone)){
+                fallingObject.position.copy(clone.position);
+                fallingObject.rotation.copy(clone.rotation);
+            }
         }
+            
+ 
 
     });
     
@@ -811,7 +904,7 @@ function customWindow(){
    
 
     texture = textureLoader.load('textures/box3.jpg')
-    keyGrup=true;
+    
     updateColorMaterial();
 
     const body=document.body;
@@ -928,8 +1021,6 @@ function customWindow(){
         }
         if(!input2.checked){
             keyGrup=true;
-
-
         }
     })
 
@@ -944,5 +1035,5 @@ function customWindow(){
 
 
 }
-main();
+update();
 
