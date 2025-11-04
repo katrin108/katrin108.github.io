@@ -977,8 +977,8 @@ function customWindow(){
 
     var mouse= document.createElement("H2"); 
     var no_mouse= document.createElement("H2"); 
-    mouse.textContent="Using 2 hands";  
-    no_mouse.textContent="Using 3 hands";
+    mouse.textContent="Gamer keys";  
+    no_mouse.textContent="Non-gamer keys";
 
 
     const label2= document.createElement("label"); 
