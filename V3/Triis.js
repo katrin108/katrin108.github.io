@@ -92,9 +92,14 @@ function update(){
 
 
         const h1=document.createElement("h1");
-        h1.textContent="Triis";
+        h1.textContent="3D Tetris";
+
+        const h3=document.createElement("h3");
+        h3.textContent="TÖL105M Tölvugrafík - Verkefni 3";
 
         
+        const h3_date=document.createElement("h3");
+        h3_date.textContent="Haust 2025";
        
         const startButton=document.createElement("button");
         startButton.textContent="Start"
@@ -102,6 +107,10 @@ function update(){
 
 
         startSeen.appendChild(h1); 
+        startSeen.appendChild(h3);
+        startSeen.appendChild(h3_date); 
+
+
 
         startSeen.appendChild(startButton);  
 

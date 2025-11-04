@@ -127,8 +127,8 @@ input:checked + .slider:before {
 
 
 dialog{
-  height: 20vh;
-  width: 30vh;
+  height: fit-content;
+  width: fit-content;
 
   border: none;
   border-radius: 10px;
