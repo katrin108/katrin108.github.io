@@ -108,6 +108,8 @@ function update(){
         document.body.appendChild(startSeen);
 
         startButton.addEventListener("click", function (e){
+            resultText.textContent="Ponits: "+points;
+
             document.body.removeChild(startSeen);
 
             gamestate="playing";
@@ -119,6 +121,7 @@ function update(){
 
     }
     if(gamestate==="lose"){
+
         const loseSeen=document.createElement("dialog");
         
         const p=document.createElement("h2");
@@ -138,10 +141,12 @@ function update(){
 
         restartButton.addEventListener("click", function (e){
             document.body.removeChild(loseSeen);
+            points=0;
+            resultText.textContent="Ponits: "+points;
 
             scene.remove(tower);
 
-            points=0;
+            
             tower=new THREE.Group();
             scene.add(tower);
             grid= 
@@ -373,13 +378,15 @@ function movingObject(){
         //TODO Lose if above 20 hight;
         
         
-            
+        if(fallingspeed>0.0){
+            fallingObject= getNewRandomObject(); //Chance in to random object
+            //fallingObject=tetromino(3);
+            const [x,z] =getFallingObjectLoc();
+            fallingObject.position.set(x,10.5,z);
+            scene.add(fallingObject);
+        }
 
-        fallingObject= getNewRandomObject(); //Chance in to random object
-        //fallingObject=tetromino(3);
-        const [x,z] =getFallingObjectLoc();
-        fallingObject.position.set(x,10.5,z);
-        scene.add(fallingObject);
+        
 
 
     }
@@ -949,7 +956,7 @@ function customWindow(){
     //points
     const ponintsText=document.createElement("div");
     //var resultText= document.createElement("H2"); 
-    resultText.textContent="Ponits: "+points;
+    //resultText.textContent="Ponits: "+points;
 
     ponintsText.appendChild(resultText);
 
