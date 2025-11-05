@@ -381,7 +381,7 @@ function movingObject(){
                 //console.log("Full!!!!",y-1);
                 clearFullLayer(y);
                 //case a new full layer droped.
-
+                console.log(y);
                 y-=1;
                 ++line;
             }
@@ -429,12 +429,11 @@ function clearFullLayer(y){
             grid[x][y][z]=0;
                         
             //if there are any cubes above the y 
-             //they will go 1 down
+            //they will go 1 down
             for(let yAbove=y;yAbove<HEIGHT;yAbove++){
                 if(grid[x][yAbove+1][z]===1){
      
-                    grid[x][yAbove][z]+=1;
-                    grid[x][yAbove+1][z]-=1;
+                    grid[x][yAbove][z]=grid[x][yAbove+1][z];
                     
                 }
                 grid[x][HEIGHT][z]=0;
@@ -452,9 +451,8 @@ function clearFullLayer(y){
             const pos = new THREE.Vector3();
             cube.getWorldPosition(pos);
 
-            var posY = Math.round(pos.y); 
-            posY+=11;
-            
+            var posY = Math.round(pos.y)+11; //offset
+                      
             if (posY === y) {
                 removedCubes.push(cube);
             } else if (posY > y) {
