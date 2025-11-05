@@ -300,8 +300,8 @@ function canMoveFallingObject(object){
 
         //Gólfið
         if(y<=1){
-            console.log(y);
-            console.log("floor canMoveFallingObject")
+            //console.log(y);
+            //console.log("floor canMoveFallingObject")
             return false;
         }
 
@@ -313,7 +313,7 @@ function canMoveFallingObject(object){
             }
             if(grid[x][y][z] !== 0){ 
 
-                console.log("grid<");
+                //console.log("grid<");
 
                 return false;
             } 
@@ -351,7 +351,7 @@ function movingObject(){
             //make sure it is below height
             else{
                 gamestate="lose";
-                console.log("you lose--movingObject");
+                //console.log("you lose--movingObject");
                 update();
                 break;
                 
@@ -360,7 +360,7 @@ function movingObject(){
             
             //for the tower
             if(y<min){
-                console.log(min)
+                //console.log(min)
                 min=y;
                 height++;
             }
