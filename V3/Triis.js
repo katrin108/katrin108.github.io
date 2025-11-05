@@ -286,8 +286,8 @@ function background(){
 }
 
 function canMoveFallingObject(object){
-
-
+    
+ 
     for(const cube of object.children){
 
         const pos=new THREE.Vector3();
@@ -299,7 +299,9 @@ function canMoveFallingObject(object){
 
 
         //Gólfið
-        if(y===1){
+        if(y<=1){
+            console.log(y);
+            console.log("floor canMoveFallingObject")
             return false;
         }
 
@@ -311,7 +313,7 @@ function canMoveFallingObject(object){
             }
             if(grid[x][y][z] !== 0){ 
 
-                //console.log("grid<");
+                console.log("grid<");
 
                 return false;
             } 
@@ -332,6 +334,8 @@ function movingObject(){
 
     }else{ 
         var min=20;
+        let height=-1;
+        
         for(const cube of fallingObject.children){
             
             const pos=new THREE.Vector3();
@@ -356,13 +360,16 @@ function movingObject(){
             
             //for the tower
             if(y<min){
-                min=y-1;
+                console.log(min)
+                min=y;
+                height++;
             }
+            
           
         }
       
         //Lægsti punktur kubbs 
-        fallingObject.position.y=min-9.5;
+        fallingObject.position.y=min-10.5+height;
         tower.add(fallingObject);
 
         //TODO IS there full layer in the grid?
