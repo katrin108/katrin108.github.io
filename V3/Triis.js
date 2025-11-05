@@ -433,7 +433,8 @@ function clearFullLayer(y){
             for(let yAbove=y;yAbove<HEIGHT;yAbove++){
                 if(grid[x][yAbove+1][z]===1){
      
-                    grid[x][yAbove][z]=grid[x][yAbove+1][z];
+                    grid[x][yAbove][z]=1;
+                    grid[x][yAbove+1][z]=0;
                     
                 }
                 grid[x][HEIGHT][z]=0;
