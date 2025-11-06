@@ -148,7 +148,8 @@ function update(){
        
         document.body.appendChild(loseSeen);
 
-        restartButton.addEventListener("click", function (e){
+        restartButton.addEventListener("click", function (e){ 
+            fallingspeed=0.01;
             document.body.removeChild(loseSeen);
             points=0;
             resultText.textContent="Ponits: "+points;
@@ -165,7 +166,8 @@ function update(){
             )));
             gamestate="playing";
             
-            fallingspeed=0.01;
+            
+           
 
         })
        
@@ -205,8 +207,9 @@ function main(){
 }
 function animate() {
     
-
-    movingObject();
+    if(gamestate==="playing"){
+        movingObject();
+    }
 
     
     const radius = zDist; // distance from object
@@ -351,6 +354,7 @@ function movingObject(){
             //make sure it is below height
             else{
                 gamestate="lose";
+                fallingspeed=0.0;
                 //console.log("you lose--movingObject");
                 update();
                 break;
@@ -394,13 +398,13 @@ function movingObject(){
         //TODO Lose if above 20 hight;
         
         
-        if(fallingspeed>0.0){
-            fallingObject= getNewRandomObject(); //Chance in to random object
-            //fallingObject=tetromino(2);
-            const [x,z] =getFallingObjectLoc();
-            fallingObject.position.set(x,10.5,z);
-            scene.add(fallingObject);
-        }
+        
+        fallingObject= getNewRandomObject(); //Chance in to random object
+        //fallingObject=tetromino(2);
+        const [x,z] =getFallingObjectLoc();
+        fallingObject.position.set(x,10.5,z);
+        scene.add(fallingObject);
+        
 
         
 
