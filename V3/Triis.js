@@ -474,7 +474,6 @@ function clearFullLayer(y){
     
 }
 
-
 function getRandomInt(max) {
   return Math.floor(Math.random() * max);
 }
@@ -674,8 +673,6 @@ function KeybordControlls(){
     
     
 }
-
-
 
 
 function getFallingObjectLoc(){
