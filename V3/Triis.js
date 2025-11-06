@@ -396,7 +396,7 @@ function movingObject(){
         
         if(fallingspeed>0.0){
             fallingObject= getNewRandomObject(); //Chance in to random object
-            //fallingObject=tetromino(3);
+            //fallingObject=tetromino(2);
             const [x,z] =getFallingObjectLoc();
             fallingObject.position.set(x,10.5,z);
             scene.add(fallingObject);
