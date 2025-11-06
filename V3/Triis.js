@@ -84,7 +84,6 @@ let gamestate ="start";
 //dialog for start, lose
 function update(){
    
-
   
     if(gamestate==="start"){
          document.body.style.backgroundColor ='#0d0d0d';
@@ -105,11 +104,9 @@ function update(){
         startButton.textContent="Start"
 
 
-
         startSeen.appendChild(h1); 
         startSeen.appendChild(h3);
         startSeen.appendChild(h3_date); 
-
 
 
         startSeen.appendChild(startButton);  
