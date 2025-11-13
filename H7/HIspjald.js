@@ -74,7 +74,7 @@ function configureTexture( image ) {
     gl.uniform1i(gl.getUniformLocation(program, "texture"), 0);
 }
 
-let colorLoc = gl.getUniformLocation(program,'colorChance');
+let colorLoc ;
 
 let r=1.0;
 let g=1.0;
@@ -97,6 +97,8 @@ window.onload = function init() {
     //
     program = initShaders( gl, "vertex-shader", "fragment-shader" );
     gl.useProgram( program );
+
+    colorLoc=gl.getUniformLocation(program,'colorChance');
     
     var vBuffer = gl.createBuffer();
     gl.bindBuffer( gl.ARRAY_BUFFER, vBuffer );
