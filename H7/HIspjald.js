@@ -164,7 +164,7 @@ window.onload = function init() {
             }
         }
     } );
-    
+    //ssssss
     // Event listener for keyboard
      window.addEventListener("keydown", function(e){
          switch( e.keyCode ) {
@@ -182,12 +182,10 @@ window.onload = function init() {
             case 71: //G
                 keydownRGB=true;
                 useColor='g';
-               
                 break;
             case 66: //B
                 keydownRGB=true;
                 useColor='b';
-
                 break;
          }
          
