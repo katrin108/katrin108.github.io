@@ -155,11 +155,11 @@ window.onload = function init() {
                 r+=deltaY;
             }
             if(useColor==="g"){
-                g=Math.max(0.0,Math.min(0.0,(g+deltaY)));
+                g+=g+deltaY;
 
             }
             if(useColor==="b"){
-                b=Math.max(0.0,Math.min(0.0,(b+deltaY)));
+                b+=deltaY;
 
             }
         }
@@ -193,6 +193,9 @@ window.onload = function init() {
      window.addEventListener("keyup",function(e){
         keydownRGB=false;
         useColor=null;
+        r=1.0;
+        g=1.0;
+        b=1.0;
 
      })
 
