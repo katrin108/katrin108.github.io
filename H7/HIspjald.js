@@ -183,7 +183,23 @@ window.onload = function init() {
     render();
  
 }
+function adjustColor(c){
+    
+    canvas.addEventListener("mousemove", function(e){
+        if(movement) {
 
+            if(origY>e.clientY){
+                c+=0.1;
+            }
+            else{
+                c-=0.1;
+
+            }
+            origY = e.clientY;
+        }
+    } );
+    return c;
+}
 
 
 
