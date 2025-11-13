@@ -177,16 +177,22 @@ window.onload = function init() {
             case 82: //R
                 
                 useColor='r';
+                g=1.0;
+                b=1.0;
                 keydownRGB=true;
                 break;
             case 71: //G
                 
                 useColor='g';
+                r=1.0;
+                b=1.0;
                 keydownRGB=true;
                 break;
             case 66: //B
                 
                 useColor='b';
+                r=1.0;
+                g=1.0;
                 keydownRGB=true;
                 break;
          }
