@@ -6,6 +6,8 @@
 //
 //    Hjálmtýr Hafsteinsson, október 2025
 
+const { clamp } = require("three/src/math/MathUtils.js");
+
 
 
 /////////////////////////////////////////////////////////////////
@@ -25,7 +27,7 @@ var movement = false;
 var spinX = 0;
 var spinY = 0;
 var origX;
-var origY;
+var origY=0;
 
 var zDist = 5.0;
 
@@ -79,6 +81,8 @@ let colorLoc ;
 let r=1.0;
 let g=1.0;
 let b=1.0;
+let keydownRGB=false;
+let useColor=null;
 
 window.onload = function init() {
 
@@ -147,6 +151,19 @@ window.onload = function init() {
             origX = e.clientX;
             origY = e.clientY;
         }
+        if(keydownRGB){
+            const deltaY=(origY-e.clientY)*0.1;
+            origY=e.clientY;
+            if(useColor==="r"){
+                r=clamp(r+deltaY);
+            }
+            if(useColor==="g"){
+                g=clamp(g+deltaY);
+            }
+            if(useColor==="b"){
+                b=clamp(b+deltaY);
+            }
+        }
     } );
     
     // Event listener for keyboard
@@ -159,17 +176,28 @@ window.onload = function init() {
                 zDist -= 0.1;
                 break;
             case 82: //R
-                r+=1;
-                break;
-            case 71: //G
-                g+=1;
+                keydownRGB=true;
+                useColor='r';
 
                 break;
+            case 71: //G
+                keydownRGB=true;
+                useColor='g';
+               
+                break;
             case 66: //B
-                b+=1;
+                keydownRGB=true;
+                useColor='b';
+
                 break;
          }
+         
      }  );  
+     window.addEventListener("keyup",function(e){
+        keydownRGB=false;
+        useColor=null;
+
+     })
 
     // Event listener for mousewheel
      window.addEventListener("wheel", function(e){
@@ -183,23 +211,7 @@ window.onload = function init() {
     render();
  
 }
-function adjustColor(c){
-    
-    canvas.addEventListener("mousemove", function(e){
-        if(movement) {
 
-            if(origY>e.clientY){
-                c+=0.1;
-            }
-            else{
-                c-=0.1;
-
-            }
-            origY = e.clientY;
-        }
-    } );
-    return c;
-}
 
 
 
