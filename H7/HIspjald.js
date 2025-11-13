@@ -149,13 +149,13 @@ window.onload = function init() {
             origY = e.clientY;
         }
         if(keydownRGB){
-            const deltaY=(origY-e.clientY)*0.1;
+            const deltaY=(origY-e.clientY)*0.01;
             origY=e.clientY;
             if(useColor==="r"){
                 r+=deltaY;
             }
             if(useColor==="g"){
-                g+=g+deltaY;
+                g+=deltaY;
 
             }
             if(useColor==="b"){
