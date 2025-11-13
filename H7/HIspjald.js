@@ -6,7 +6,7 @@
 //
 //    Hjálmtýr Hafsteinsson, október 2025
 
-const { clamp } = require("three/src/math/MathUtils.js");
+
 
 
 
