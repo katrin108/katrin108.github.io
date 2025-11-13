@@ -6,7 +6,7 @@
 //
 //    Hjálmtýr Hafsteinsson, október 2025
 
-const { color } = require("three/tsl");
+
 
 /////////////////////////////////////////////////////////////////
 var canvas;
