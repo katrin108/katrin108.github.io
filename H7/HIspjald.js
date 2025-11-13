@@ -175,17 +175,19 @@ window.onload = function init() {
                 zDist -= 0.1;
                 break;
             case 82: //R
-                keydownRGB=true;
+                
                 useColor='r';
-
+                keydownRGB=true;
                 break;
             case 71: //G
-                keydownRGB=true;
+                
                 useColor='g';
+                keydownRGB=true;
                 break;
             case 66: //B
-                keydownRGB=true;
+                
                 useColor='b';
+                keydownRGB=true;
                 break;
          }
          
