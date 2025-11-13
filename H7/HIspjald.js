@@ -155,13 +155,15 @@ window.onload = function init() {
             const deltaY=(origY-e.clientY)*0.1;
             origY=e.clientY;
             if(useColor==="r"){
-                r=clamp(r+deltaY);
+                r=Math.max(0.0,Math.min(2.0,(r+deltaY)));
             }
             if(useColor==="g"){
-                g=clamp(g+deltaY);
+                g=Math.max(0.0,Math.min(2.0,(g+deltaY)));
+
             }
             if(useColor==="b"){
-                b=clamp(b+deltaY);
+                b=Math.max(0.0,Math.min(2.0,(b+deltaY)));
+
             }
         }
     } );
