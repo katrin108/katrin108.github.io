@@ -382,7 +382,7 @@ function movingObject(){
                 //console.log("Full!!!!",y-1);
                 clearFullLayer(y);
                 //case a new full layer droped.
-                console.log(y);
+                //console.log(y);
                 y-=1;
                 ++line;
             }
@@ -414,6 +414,7 @@ function isLayerFull(y){
     for(let x=0;x<WIDTH;x++){
         for(let z=0;z<DEPTH;z++){
             if(grid[x][y][z]===0){
+                
                 return false;
             }
                       
@@ -424,6 +425,7 @@ function isLayerFull(y){
 
 //remove the layer that is Height y
 function clearFullLayer(y){
+    
     for(let x=0;x<WIDTH;x++){
         //remove the cubes in the y height
         for(let z=0;z<DEPTH;z++){
@@ -683,8 +685,8 @@ function getFallingObjectLoc(){
     return [randIntX,randIntZ];
 }
 function getNewRandomObject(){
-    const r = getRandomInt (7);
     
+    const r = getRandomInt (7);
         switch (r){
             case 0:
                 return polyomino(0);
@@ -950,6 +952,11 @@ function customWindow(){
 
     const input =  document.createElement("input"); 
     input.type="checkbox";
+    input.addEventListener("keydown", (e) => {
+        if (e.code === "Space" || e.key === " ") {
+            e.preventDefault();
+        }  
+    });
 
 
     const span =  document.createElement("span"); 
@@ -991,6 +998,13 @@ function customWindow(){
 
     const input2 =  document.createElement("input"); 
     input2.type="checkbox";
+
+    
+    input2.addEventListener("keydown", (e) => {
+        if (e.code === "Space" || e.key === " ") {
+            e.preventDefault();
+        }  
+    });
 
 
     const span2 =  document.createElement("span"); 
