@@ -958,7 +958,6 @@ function customWindow(){
         }  
     });
 
-
     const span =  document.createElement("span"); 
     span.className = "slider round";
 
@@ -999,7 +998,6 @@ function customWindow(){
     const input2 =  document.createElement("input"); 
     input2.type="checkbox";
 
-    
     input2.addEventListener("keydown", (e) => {
         if (e.code === "Space" || e.key === " ") {
             e.preventDefault();
